@@ -1,0 +1,35 @@
+:host {
+  .enterprise-logo {
+    display: inline-block;
+    position: relative;
+    img {
+      max-height: 100px;
+    }
+    .profile-image {
+      border-radius: 50%;
+    }
+    .avatar {
+      width: 100px;
+      min-width: 100px;
+      height: 100px;
+      min-height: 100px;
+    }
+    .enterprise-avatar {
+      max-width: 200px;
+      max-height: 42px;
+    }
+    .file {
+      display: none;
+    }
+    .enterprise-info__edit {
+        position: absolute;
+        width: 100%;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        .mat-icon {
+            cursor: pointer;
+        }
+    }
+  }
+}

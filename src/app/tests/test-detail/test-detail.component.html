@@ -1,0 +1,107 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-text card-header-rose">
+                  <div class="card-text" style="float:left">
+                      <h4 class="card-title"> {{test.name}} </h4>
+                          <p class="card-category"> {{ test.description }}</p>
+                  </div>
+                    <div align="right" style="margin-top:5px">
+                        <span style="color:black"><b>Expires On </b> : {{ test.expiry_time }} </span> <input style="margin-left:20px" type="button" class="btn btn-fill btn-rose btn-wd" name="next" value="Resend test link to all" [disabled]="test.status === 'Evaluated'" (click)="resentTestLinkWithAlert(true, undefined)">
+                    </div>
+                </div>
+                  <div class="card-body">
+<!--                      <div class="row">-->
+<!--                          <div class="col-md-2">-->
+<!--                              Technologies Allowed-->
+<!--                          </div>-->
+<!--                          <div class="col-md-10" *ngIf="test.attributes_info">-->
+<!--                              <span style="margin-left:20px;" *ngFor="let technology of test.attributes_info.technologies" class="badge badge-info">{{ technology.displayName }} </span>-->
+<!--                          </div>-->
+<!--                      </div>-->
+                      <div class="row" *ngIf="test.questions">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <th> S.No. </th>
+                                        <th> Question </th>
+                                        <th> Description</th>
+                                        <th> Points</th>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let question of test.questions; let i = index">
+                                            <td>{{i + 1}}</td>
+                                            <td>{{question.displayTitle}}</td>
+                                            <td>{{question.displayDescription}}</td>
+                                            <td>{{question.points}}</td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header card-header-text card-header-rose">
+                        <div class="card-text" style="float:left">
+                      <h4 class="card-title">Candidates </h4>
+                    </div>
+                    <div align="right" style="margin-top:5px">
+                        <span style="color:black"><b>Max Duration : </b>{{ test.duration }}</span> <input style="margin-left:20px" type="button" class="btn btn-rose" [disabled]="test.status !== 'Evaluated'" name="next" value="Download Test Report" (click)="downloadReport(test)">
+                    </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row" *ngIf="test.candidates">
+                          <div class="col-md-12">
+                              <div class="table-responsive">
+                                  <table class="table">
+                                      <thead>
+                                      <th class="text-center"> Rank </th>
+                                      <th class="text-center"> CID </th>
+                                      <th class="text-center"> Candidate Name</th>
+                                      <th class="text-center"> Candidate Email</th>
+                                      <th class="text-center"> Status </th>
+                                      <th class="text-center"> Best Score </th>
+                                      <th class="text-center"> Last Score </th>
+                                      <th class="text-center"> Questions Attempted </th>
+                                      <th class="text-center"> Actions </th>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let candidate of test.candidates; let i = index;">
+                                            <td class="text-center">{{i + 1}}</td>
+                                            <td class="text-center">{{candidate.id}}</td>
+                                            <td class="text-center">{{candidate.name}}</td>
+                                            <td class="text-center">{{candidate.email}}</td>
+                                            <td class="text-center"><span class="badge badge-info">{{candidate.status}}</span></td>
+                                            <td class="text-center">{{ candidate.best_score }} / {{ test.total_score }}</td>
+                                            <td class="text-center">{{ candidate.last_score }} / {{ test.total_score }}</td>
+                                            <td class="text-center">{{candidate.questions_attempted}} / {{ test.questions.length }}</td>
+                                            <td class="text-center" *ngIf="candidate.status === 'Created' || candidate.status === 'Initiated'">
+                                                <span>
+                                                    <mat-icon matTooltip="Send E-Mail" (click)="resentTestLinkWithAlert(false, candidate.id)">mail</mat-icon>
+                                                </span>
+                                            </td>
+                                            <td class="text-center" *ngIf="candidate.status === 'Active' || candidate.status === 'Completed' || test.status === 'Evaluated'">
+                                                <span>
+                                                    <mat-icon matTooltip="View Report" [routerLink]="getPathForCandidateTestReport(candidate.uuid)">assignment</mat-icon>
+                                                    <mat-icon *ngIf="candidate.status === 'Evaluated'" matTooltip="Download Candidate Report" (click)="downloadCandidateTestReport(test, candidate.id)">cloud_download</mat-icon>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>

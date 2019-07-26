@@ -1,0 +1,142 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">person</i>
+                        </div>
+                        <h4 class="card-title"> Profile </h4>
+                    </div>
+
+                    <div class="card-body row">
+                        <div class="col-md-2 text-center">
+                            <div class="enterprise-logo">
+                              <img class="profile-image avatar huge" [src]="user['profileImageUrl'] ? user['profileImageUrl'] : './static/frontend/assets/img/default-avatar.png'" #imgEl>
+                              <div class="enterprise-info__edit" fxLayout fxLayoutGap="8px" fxLayoutAlign="center center">
+                                  <mat-icon class="s-24" color="primary" (click)="input.click()">edit</mat-icon>
+                                  <mat-icon class="s-24" color="warn" (click)="user['profileImageUrl'] = null">close</mat-icon>
+                              </div>
+                              <input class="file" type="file" accept="image/*" (change)="onImgChange(input, imgEl)" #input>
+                            </div>
+                            <br><br><br>
+                            <span>Max File Size: {{ maxFileSizeString }}</span>
+                        </div>
+                      <div class="col-md-6">
+                        <form class="form" method="" action="">
+                            <div class="form-group has-default">
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                      <i class="material-icons">mail</i>
+                                    </span>
+                                  </div>
+                                  <input type="text" class="form-control input-disabled" disabled name="login-email" [(ngModel)]="user.email" placeholder="Email..." >
+                                </div>
+                              </div>
+                              <!-- <div class="form-group has-default">
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                          <i class="material-icons">work</i>
+                                        </span>
+                                      </div>
+                                      <div class="form-control" *ngIf="user.enterprise">
+                                        <app-enterprise-type-single-select [isDisabled]="true" [entType]="user.enterprise.enterpriseType" (selectionChange)="selectedChange($event)"></app-enterprise-type-single-select>
+                                      </div>
+                                  </div>
+                                </div> -->
+                            <div class="form-group has-default">
+                                <div class="input-group row">
+                                    <div class="col-md-1">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text">
+                                            <i class="material-icons">face</i>
+                                          </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" name="login-first_name" [(ngModel)]="user.firstName" placeholder="First Name...">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" name="login-last_name" [(ngModel)]="user.lastName" placeholder="Last Name..." >
+                                    </div>                                    
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-group has-default">
+                                <div class="input-group row">
+                                    <div class="col-md-1">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text">
+                                            <i class="material-icons">stay_primary_portrait</i>
+                                          </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="text" class="form-control" name="login-country_code" [(ngModel)]="user.firstName" placeholder="Country Code...">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" name="login-mobile_num" [(ngModel)]="user.lastName" placeholder="Phone Number..." >
+                                    </div>                                    
+                                </div>
+                            </div> -->
+
+                          <div class="text-center">
+                            <a [routerLink]="" (click)="updateProfile()" class="btn btn-primary btn-round mt-4">Update</a>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" *ngIf="user.enterprise as enterprise">
+                <div class="card">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">business</i>
+                        </div>
+                        <h4 class="card-title"> Enterprise </h4>
+                    </div>
+
+                    <div class="card-body">
+                      <div class="row">
+                        
+                          <div class="col-md-2 text-center">
+                              <div class="enterprise-logo" style="padding-top: 10px;">
+                                <img class="enterprise-avatar huge" [src]="enterprise.logo ? enterprise.logo : './static/frontend/assets/img/default-enterprise-logo.png'" #imgElE>
+                                <div class="enterprise-info__edit" fxLayout fxLayoutGap="8px" fxLayoutAlign="center center">
+                                    <mat-icon class="s-24" color="primary" (click)="inputE.click()">edit</mat-icon>
+                                    <mat-icon class="s-24" color="warn" (click)="enterprise.logo = null">close</mat-icon>
+                                </div>
+                                <input class="file" type="file" accept="image/*" (change)="onImgChange_e(inputE, imgElE)" #inputE>
+                              </div>
+                              
+                              <br><br><br>
+                              <span>Max File Size: {{ maxFileSizeString }}</span>
+                            </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-default">
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                      <i class="material-icons">business</i>
+                                    </span>
+                                  </div>
+                                  <input type="text" disabled class="form-control input-disabled" name="login-enterprise" [(ngModel)]="enterprise.name" placeholder="Enterprise Name..." >
+                                </div>
+                              </div>
+                              <div class="text-center">
+                                  <a [routerLink]="" (click)="uploadEnterpriselogo()" class="btn btn-primary btn-round mt-4">Update</a>
+                                </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

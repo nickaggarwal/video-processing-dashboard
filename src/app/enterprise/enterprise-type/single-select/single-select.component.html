@@ -1,0 +1,12 @@
+<mat-select style="font-size:12px" 
+            placeholder="Select enterprise type..." 
+            name="ent-type"
+            [(ngModel)]="entType" 
+            [ngClass]="isDisabled ? 'input-disabled' : 'input-enabled'"
+            [disabled]="isDisabled"
+            (selectionChange)="sendChangedData($event)" 
+>
+  <mat-option *ngFor="let entType of entTypes" [value]="entType" [ngClass]="isDisabled ? 'input-disabled' : 'input-enabled'" >
+    {{ entType.displayName }}
+  </mat-option>
+</mat-select>

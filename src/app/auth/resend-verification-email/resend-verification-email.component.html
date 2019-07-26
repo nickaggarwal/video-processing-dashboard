@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 ml-auto mr-auto">
+      <div class="card text-center">
+          <br><br>
+          <div class="large-icon">
+              <mat-icon [inline]="true">mail_outline</mat-icon>
+          </div>
+          <br><br>
+          <h3 class="card-title text-center">Resend Verification Email</h3>
+        <div class="card-body text-center">
+            <span class="bmd-form-group row">
+              <div class="input-group text-center col-md-8 col-md-offset-4" style="margin-left: 13%">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="material-icons">email</i>
+                  </span>
+                </div>
+                <input type="email" class="form-control" placeholder="Email..." name="login-username" [(ngModel)]="email">
+              </div>
+            </span>
+            <div class="card-footer justify-content-center">
+                <button [disabled]="!isValidEmail()" (click)="resendVerificationEmail()" mat-raised-button class="btn btn-rose">
+                    Send Verification Link
+                </button>
+            </div>
+            <br>
+            <div>Check your inbox and click on the Verification link to confirm your email address.</div>
+            <a [routerLink]="['/auth/login']" style="text-decoration: underline;">Go back to Login Page</a>
+            <br><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

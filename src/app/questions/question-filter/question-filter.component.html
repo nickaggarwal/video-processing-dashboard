@@ -1,0 +1,5 @@
+<div class="row text-center">
+    <div class="col-md-3" *ngFor="let specialTagTypeInfo of specialTagTypeInfos; let i = index;">
+        <app-tag-filter (selectedTagsChange)="selectedTagsChangeEmit($event, i)" [treeData]="specialTagTypeInfo.treeData" [placeHolder]="specialTagTypeInfo.placeHolder" [selectedTagNumbers]="selectedTagIds"></app-tag-filter>
+    </div>
+  </div>

@@ -1,0 +1,233 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-success card-header-icon">
+                      <div class="card-icon">
+                          <!-- <i class="material-icons">assignment</i> -->
+                          <i class="fas fa-users fa-2x"></i>
+                      </div>
+                      <h4 class="card-title"> Video Processing Dashboard </h4>
+                  </div>
+                  <br><br>
+                  <div class="container">
+                    <div style="font-size: 30px;">
+                      Segment Video
+                    </div>
+                    <hr>
+                  
+                        <div class="row">
+                                <div class="col-md-6">
+                                      <mat-form-field class="example-full-width has-label">
+                                              <input type="text"
+                                              name="video-link"
+                                              matInput
+                                              id="video-link"
+                                              placeholder="Video Link..."
+                                              [(ngModel)]="videoLink"
+                                              >
+                                      </mat-form-field>
+                                </div>                        
+                            </div>
+          
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <mat-form-field>
+                                      <mat-select placeholder="Select Segment settings..." [(ngModel)]="currentSetting" (ngModelChange)="segmentSettingChanged()" id="segment-setting" name="segment-setting">
+                                          <mat-option *ngFor="let setting of segmentSettings" [value]="setting.name">
+                                              <span id="{{ setting.id }}">{{ setting.displayName }}</span>
+                                          </mat-option>
+                                      </mat-select>
+                                  </mat-form-field>
+                                </div>
+                            </div>
+          
+                            <div class="row">
+                              <div *ngIf="currentSetting === 'Interval duration'" class="col-md-6">
+                                  <mat-form-field class="example-full-width has-label">
+                                      <input type="text"
+                                      name="interval-duration"
+                                      matInput
+                                      id="interval-duration"
+                                      placeholder="Interval Duration (in seconds)..."
+                                      [(ngModel)]="intervalDuration"
+                                      (ngModelChange)="intervalDurationChanged($event)"
+                                      >
+                                  </mat-form-field>
+                              </div>
+                              <div *ngIf="currentSetting === 'Range duration'" class="col-md-6">
+                                  <input type="button" (click)="addRangeDuration()" class="btn btn-rose" name="add-range-duration" id="add-range-duration" value="Add Range Duration">
+          
+                                  <div *ngFor="let rangeDuration of rangeDurations; let i = index; " class="row">
+                                      
+                                      <div class="col-md-2">
+                                          <mat-form-field class="example-full-width has-label">
+                                              <input type="text"
+                                              name="range-duration-start-{{ i + 1 }}"
+                                              matInput
+                                              id="range-duration-start-{{ i + 1 }}"
+                                              placeholder="Range Duration Start (in seconds)..."
+                                              [(ngModel)]="rangeDuration.start"
+                                              (ngModelChange)="rangeDurationChanged($event)"
+                                              >
+                                          </mat-form-field>
+                                      </div>
+          
+                                      <div class="col-md-2">
+                                          <mat-form-field class="example-full-width has-label">
+                                              <input type="text"
+                                              name="range-duration-end-{{ i + 1 }}"
+                                              matInput
+                                              id="range-duration-end-{{ i + 1 }}"
+                                              placeholder="Range Duration End (in seconds)..."
+                                              [(ngModel)]="rangeDuration.end"
+                                              (ngModelChange)="rangeDurationChanged($event)"
+                                              >
+                                          </mat-form-field>
+                                      </div>
+          
+                                      <div class="col-md-2">
+                                          <input type="button" (click)="deleteRangeDuration(i)" class="btn btn-rose" name="delete-range-duration" id="delete-range-duration-{{ i + 1}}" value="Delete">
+                                      </div>
+          
+                                  </div>
+                              </div>
+                              <div *ngIf="currentSetting === 'Number of segments'" class="col-md-6">
+                                  <mat-form-field class="example-full-width has-label">
+                                          <input type="text"
+                                          name="num-segments"
+                                          matInput
+                                          id="num-segments"
+                                          placeholder="Number of Segments..."
+                                          [(ngModel)]="numSegments"
+                                          (ngModelChange)="numSegmentsChanged($event)"
+                                          >
+                                  </mat-form-field>
+                              </div>
+                            </div>
+          
+                            <div class="row">
+                              <div class="col-md-2">
+                                  <input type="button" (click)="processVideo()" [disabled]="!isAnySegmentSettingSelected || !videoLink" class="btn btn-rose" name="process-video" id="process-video" value="Segment Video">
+                              </div>
+                            </div>
+          
+                            <div class="row">
+                              <div class="col-md-4" *ngFor="let video of intervalVideos; let i = index;">
+                                  <video width="320" height="240" controls>
+                                        <source id="segmented-video-{{ i + 1 }}" [src]="video.video_url" type="video/mp4">
+                                        <source id="segmented-video-{{ i + 1 }}" [src]="video.video_url" type="video/ogg">
+                                        <source id="segmented-video-{{ i + 1 }}" [src]="video.video_url" type="video/webm">
+                                        Your browser does not support the video tag.
+                                  </video>
+                              </div>
+                            </div>
+                  </div>
+                  
+                  <br><br>
+                  <div class="container">
+                        <div style="font-size: 30px;">
+                                Combine Video
+                            </div>
+                            <hr>
+                            <div class="row" >
+                                <div class="col-md-2">
+                                    <input type="button" (click)="addVideoForCombining()" class="btn btn-rose" name="add-video" id="add-video" value="Add Video">
+                                </div>
+                            </div>
+                            
+                            <div class="row" *ngFor="let video of combineVideos; let i = index;">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width has-label">
+                                        <input type="text"
+                                        name="combine-video-{{ i + 1 }}"
+                                        matInput
+                                        id="combine-video-{{ i + 1 }}"
+                                        placeholder="Video Link..."
+                                        [(ngModel)]="video.video_url"
+                                        (ngModelChange)="validateCombineVideoParameters($event)"
+                                        >
+                                    </mat-form-field>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width has-label">
+                                        <input type="text"
+                                        name="combine-video-range-duration-start-{{ i + 1 }}"
+                                        matInput
+                                        id="combine-video-range-duration-start-{{ i + 1 }}"
+                                        placeholder="Start at (in seconds)..."
+                                        [(ngModel)]="video.start"
+                                        (ngModelChange)="validateCombineVideoParameters($event)"
+                                        >
+                                    </mat-form-field>
+                                </div>
+        
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width has-label">
+                                        <input type="text"
+                                        name="combine-video-range-duration-end-{{ i + 1 }}"
+                                        matInput
+                                        id="combine-video-range-duration-end-{{ i + 1 }}"
+                                        placeholder="End at (in seconds)..."
+                                        [(ngModel)]="video.end"
+                                        (ngModelChange)="validateCombineVideoParameters($event)"
+                                        >
+                                    </mat-form-field>
+                                </div>
+        
+                                <div class="col-md-2">
+                                    <input type="button" (click)="deleteCombineVideoRangeDuration(i)" class="btn btn-rose" name="delete-combine-video-range-duration" id="delete-combine-video-range-duration-{{ i + 1}}" value="Delete">
+                                </div>
+                            </div>
+        
+                            <div class="row" >
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width has-label">
+                                        <input type="text"
+                                        name="video-height"
+                                        matInput
+                                        id="video-height"
+                                        placeholder="Video Height..."
+                                        [(ngModel)]="videoHeight"
+                                        (ngModelChange)="videoHeightChanged($event)"
+                                        >
+                                    </mat-form-field>
+                                </div>
+        
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width has-label">
+                                        <input type="text"
+                                        name="video-width"
+                                        matInput
+                                        id="video-width"
+                                        placeholder="Video Width..."
+                                        [(ngModel)]="videoWidth"
+                                        (ngModelChange)="videoWidthChanged($event)"
+                                        >
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <input type="button" (click)="combineVideo()" [disabled]="!isValidCombineVideo" class="btn btn-rose" name="combine-video" id="combine-video" value="Combine Video(s)">
+                                </div>
+                            </div>
+        
+                            <div class="row" *ngIf="combinedVideo">
+                                <video width="320" height="240" controls>
+                                        <source id="combined-video" [src]="combinedVideo" type="video/mp4">
+                                        <source id="combined-video" [src]="combinedVideo" type="video/ogg">
+                                        <source id="combined-video" [src]="combinedVideo" type="video/webm">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <br>
+                  </div>
+                </div>
+          </div>
+        
+      </div>
+  </div>
+</div>

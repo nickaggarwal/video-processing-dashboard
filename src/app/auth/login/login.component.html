@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 ml-auto mr-auto">
+      <form class="form" method="" action="">
+        <div class="card card-login">
+          <div class="card-header card-header-rose text-center">
+            <h4 class="card-title">Log in</h4>
+          </div>
+          <div class="card-body ">
+            <span class="bmd-form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="material-icons">email</i>
+                  </span>
+                </div>
+                <input type="email" class="form-control" placeholder="Email..." name="login-username" [(ngModel)]="user.email">
+              </div>
+            </span>
+            <span class="bmd-form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="material-icons">lock_outline</i>
+                  </span>
+                </div>
+                <input type="password" class="form-control" placeholder="Password..." name="login-password" [(ngModel)]="user.password">
+              </div>
+            </span>
+          </div>
+          <div class="row" style="padding-left: 20px; padding-top: 15px; padding-right: 20px;">
+            <div class="col-md-6 text-left">
+              <a [routerLink]="['/auth/resend-verification-email']" class="mat-h5">Resend Verification Email</a>
+            </div>
+            <div class="col-md-6 text-right">
+                <a [routerLink]="['/auth/forgot-password']" class="mat-h5">Forgot Password</a>
+              </div>
+          </div>
+          <div class="card-footer justify-content-center">
+              <button (click)="login()" mat-raised-button class="btn btn-rose">
+                Let's Go
+              </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

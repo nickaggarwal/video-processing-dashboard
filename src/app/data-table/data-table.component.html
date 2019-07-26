@@ -1,0 +1,94 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">assignment</i>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <h4 class="card-title">{{dataTableTitle}}</h4>
+                    </div>
+                </div>
+              </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" *ngIf="tableData">
+                                <thead class="text-primary">
+                                    <tr>
+                                        <th class="text-center">#</th>  
+                                        <th class="text-center" *ngFor="let headerRow of tableData.headerRow">{{ headerRow | titlecase }}</th>
+                                        <th class="text-center">Actions</th>  
+                                    </tr>
+                                </thead>
+                            <tbody>
+                                  <!-- <tr *ngFor="let row of tableData.dataRows; let rowIdx = index;">
+                                        <td class="text-center">{{rowIdx + 1}}</td>
+                                        <td class="text-center" *ngFor="let headerRow of tableData.headerRow | slice:0:2; let i = index;">{{row[headerRow]}}</td>
+                                        <td class="td-actions text-center">
+                                          <button mat-raised-button type="button" class="btn btn-success btn-round" style="margin: 0px 4px;" (click)="editRow(row, rowIdx)">
+                                              <i class="material-icons">edit</i>
+                                          </button>
+
+                                          <button mat-raised-button type="button" class="btn btn-danger btn-round" (click)="deleteRow(rowIdx)">
+                                              <i class="material-icons">close</i>
+                                          </button>
+                                      </td>
+                                  </tr> -->
+                                  
+                                  <tr *ngFor="let row of tableData.dataRows; let rowIdx = index;" ngForm #editForm="ngForm">
+                                        <ng-template [ngIf]="!row.edit">
+                                              <td class="text-center">{{rowIdx + 1}}</td>
+                                              <td class="text-center" *ngFor="let headerRow of tableData.headerRow | slice:0:2; let i = index;">{{row[headerRow]}}</td>
+                                              <td class="td-actions text-center">
+                                                <button mat-raised-button type="button" class="btn btn-success btn-round" style="margin: 0px 4px;" (click)="row.edit = true">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <button mat-raised-button type="button" class="btn btn-danger btn-round" (click)="deleteRow(rowIdx)">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                              </td>
+                                        </ng-template>
+                                        <ng-template [ngIf]="row.edit">
+                                              <td class="text-center">{{rowIdx + 1}}</td>
+                                              <td class="text-center" *ngFor="let headerRow of tableData.headerRow | slice:0:2; let i = index;">
+                                                  <mat-form-field class="m-auto">
+                                                      <input matInput type="text" [name]="headerRow" [ngModel]="row[headerRow]">
+                                                  </mat-form-field>
+                                              </td>
+                                              <td class="td-actions text-center">
+                                                <button mat-raised-button type="button" class="btn btn-success btn-round" style="margin: 0px 4px;" (click)="saveRow(editForm, rowIdx)">
+                                                    <i class="material-icons">save</i>
+                                                </button>
+                                                <button mat-raised-button type="button" class="btn btn-danger btn-round" (click)="row.edit = false">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                              </td>
+                                        </ng-template>
+                                    </tr>
+                                    <tr ngForm *ngIf="addNewRow" #newForm="ngForm">
+                                          <td class="text-center">{{tableData?.dataRows.length + 1}}</td>
+                                          <td class="text-center" *ngFor="let headerRow of tableData.headerRow | slice:0:2; let i = index;">
+                                              <mat-form-field class="m-auto">
+                                                  <input matInput type="text" [name]="headerRow" ngModel>
+                                              </mat-form-field>
+                                          </td>
+                                          <td class="td-actions text-center">
+                                            <button mat-raised-button type="button" class="btn btn-success btn-round" style="margin: 0px 4px;" (click)="onAddNewRow(newForm)">
+                                                <i class="material-icons">save</i>
+                                            </button>
+                                            <button mat-raised-button type="button" class="btn btn-danger btn-round" (click)="addNewRow = false">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                          </td>
+                                    </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

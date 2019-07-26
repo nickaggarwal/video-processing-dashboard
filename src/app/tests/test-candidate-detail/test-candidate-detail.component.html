@@ -1,0 +1,218 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-success card-header-icon text-center">
+                  <div class="card-icon">
+                    <i class="material-icons"></i>
+                  </div>
+                  <h2 class="card-title" style="margin-right: 90px; font-weight: 400">
+                    {{test.name}} <span style="float:right"> <span [ngClass]="getTestStatusClass(test.status)">{{test.status}}</span> </span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                          <h4 style="font-weight: 400"><b> Name:</b> {{test.candidate_name}}</h4>
+                          <h4 style="font-weight: 400"><b> Email:</b> {{test.candidate_email}}</h4>
+                          <h4 style="font-weight: 400"><b> Time Taken:</b> {{test.duration}} </h4>
+                      </div>
+                      <div class="col-md-6" style="float:right" >
+                          <h4 style="font-weight: 400"><b> Final Score : </b>  {{test.best_total_score}} / {{test.total_score}} </h4>
+                          <h4 style="font-weight: 400"><b> Questions Attempted:</b> {{test.questions_attempted}} </h4>
+                          <h4 style="font-weight: 400"><b> Questions Total:</b>  {{test.question_count}} </h4>
+                      </div>
+                    </div>
+                    <hr>
+                      <div class="row">
+                        <div class="col-md-12">
+                            <h3 style="font-weight: 400">Questions:</h3>
+                            <div class="col-md-12" *ngFor="let question of test.questions; let i = index;">
+                                <div class="col-md-12">
+                                    <div class="col-md-6" style="float:left" >
+                                     <h5 style="margin-top:5px">Q{{i + 1}}) {{question.displayTitle}}</h5>
+                                    </div>
+                                    <div class="col-md-6" style="float:right" >
+                                        <div class="col-md-6" style="float:left">
+                                        <mat-form-field >
+                                        <mat-select placeholder="Select submission.." name="submission" [(ngModel)]="question.selectedSubmission"
+                                        (selectionChange)="onSubmissionChange($event, question)" >
+                                          <mat-option *ngFor="let submission of question.submissions" [value]="submission">
+                                            {{ getSubmissionValue(submission) }}
+                                          </mat-option>
+                                        </mat-select>
+
+                                        </mat-form-field>
+                                        </div>
+                                        <div class="col-md-4" style="float:right">
+                                        <input *ngIf="question.type !== 'DS_ALGO' && question.type !== 'MCQ'" type="button" class="btn btn-fill btn-rose btn-wd" [disabled]="question.selectedSubmission.id === undefined" name="next" value="Download Report" (click)="downloadReport(question)">
+                                        </div>
+                                </div>
+                            <br>
+                            <div class="table-responsive" *ngIf="question.selectedSubmission && question.selectedSubmission.metadata.programmingTestCases">
+                                <table class="table table-striped">
+                                    <thead class="text-primary">
+                                        <th style="width: 3%"> </th>
+                                        <th style="width: 10%" class="text-center"> S. No. </th>
+                                        <th style="width: 3%"> </th>
+                                        <th style="width: 40%"> Test Case </th>
+                                        <th class="text-center"> Status</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let testCase of question.selectedSubmission.metadata.programmingTestCases; let j = index;">
+                                            <td></td>
+                                            <td class="text-center">{{ j + 1 }}</td>
+                                            <td></td>
+                                            <td>Test {{ j + 1 }}</td>
+                                            <td class="text-center">
+                                            <span [ngClass]="testCase.class">
+                                                {{testCase.status}}
+                                            </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="table-responsive" *ngIf="question.selectedSubmission && question.selectedSubmission.metadata.testCases">
+                              <table class="table table-striped">
+                                  <thead class="text-primary">
+                                    <th style="width: 3%"> </th>
+                                    <th style="width: 10%" class="text-center"> S. No. </th>
+                                    <th style="width: 3%"> </th>
+                                    <th style="width: 40%"> Test Case </th>
+                                    <th class="text-center"> Status</th>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let testCase of question.selectedSubmission.metadata.testCases; let j = index;">
+                                        <td></td>
+                                        <td class="text-center">{{ j + 1 }}</td>
+                                        <td></td>
+                                        <td>{{ testCase.testCaseName }}</td>
+                                        <td class="text-center">
+                                          <span [ngClass]="testCase.status == 'True' ? 'badge badge-success' : 'badge badge-danger'">
+                                            {{testCase.status}}
+                                          </span>
+                                        </td>
+                                    </tr>
+                                  </tbody>
+                              </table>
+
+                          <!-- <div class="row" *ngIf="question.selectedSubmission.metadata.metrics"> -->
+                          <div class="row" style="margin-left:0px; margin-right:0px" *ngIf="question.selectedSubmission.metadata.metrics">
+                              <div class="col-lg-3 col-md-6 col-sm-6">
+                                  <div class="card card-stats">
+                                      <div class="card-header card-header-warning card-header-icon">
+                                          <div class="card-icon"><i class="material-icons">help_outline</i></div>
+                                          <p class="card-category">Code Smells</p>
+                                          <h3 class="card-title">{{ question.selectedSubmission.metadata.metrics.code_smells }}</h3></div>
+                                      <div class="card-footer">
+                                          <div class="stats">
+                                              <div>Code Smells indicate poor design concepts</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6 col-sm-6">
+                                  <div class="card card-stats">
+                                      <div class="card-header card-header-rose card-header-icon">
+                                          <div class="card-icon"><i class="material-icons">highlight_off</i></div>
+                                          <p class="card-category">Blocker Violations</p>
+                                          <h3 class="card-title">{{ question.selectedSubmission.metadata.metrics.blocker_violations }}</h3></div>
+                                      <div class="card-footer">
+                                          <div class="stats">
+                                              <div>Can lead to runtime application issues</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6 col-sm-6">
+                                  <div class="card card-stats">
+                                      <div class="card-header card-header-success card-header-icon">
+                                          <div class="card-icon"><i class="material-icons">warning</i></div>
+                                          <p class="card-category">Critical Violations</p>
+                                          <h3 class="card-title">{{ question.selectedSubmission.metadata.metrics.critical_violations }}</h3></div>
+                                      <div class="card-footer">
+                                          <div class="stats">
+                                              <div>Can lead to edge case issues.</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6 col-sm-6">
+                                  <div class="card card-stats">
+                                      <div class="card-header card-header-info card-header-icon">
+                                          <div class="card-icon"><i class="material-icons">bug_report</i></div>
+                                          <p class="card-category">Bugs</p>
+                                          <h3 class="card-title">{{ question.selectedSubmission.metadata.metrics.bugs }}</h3></div>
+                                      <div class="card-footer">
+                                          <div class="stats">
+                                              <div>Indicates low language proficiency.</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6 col-sm-6">
+                                  <div class="card card-stats">
+                                      <div class="card-header card-header-warning card-header-icon">
+                                          <div class="card-icon"><i class="material-icons">star_rate</i></div>
+                                          <p class="card-category">Reliability Rating</p>
+                                          <h3 class="card-title">{{ question.selectedSubmission.metadata.metrics.reliability_rating }}</h3></div>
+                                      <div class="card-footer">
+                                          <div class="stats">
+                                              <div>Based on the severity of the worst bug.</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6 col-sm-6">
+                                  <div class="card card-stats">
+                                      <div class="card-header card-header-rose card-header-icon">
+                                          <div class="card-icon"><i class="material-icons">remove_red_eye</i></div>
+                                          <p class="card-category">Classes</p>
+                                          <h3 class="card-title">{{ question.selectedSubmission.metadata.metrics.classes }} & {{ question.selectedSubmission.metadata.metrics.statements }}</h3></div>
+                                      <div class="card-footer">
+                                          <div class="stats">
+                                              <div>Indicates Number of classes and statements.</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6 col-sm-6">
+                                  <div class="card card-stats">
+                                      <div class="card-header card-header-success card-header-icon">
+                                          <div class="card-icon"><i class="material-icons">view_headline</i></div>
+                                          <p class="card-category">Duplicate Lines</p>
+                                          <h3 class="card-title">{{ question.selectedSubmission.metadata.metrics.duplicated_lines }}</h3></div>
+                                      <div class="card-footer">
+                                          <div class="stats">
+                                              <div>Copy Paste Code.</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6 col-sm-6">
+                                  <div class="card card-stats">
+                                      <div class="card-header card-header-info card-header-icon">
+                                          <div class="card-icon"><i class="material-icons">format_line_spacing</i></div>
+                                          <p class="card-category">Cyclomatic Complexity</p>
+                                          <h3 class="card-title">{{ question.selectedSubmission.metadata.metrics.complexity }}</h3></div>
+                                      <div class="card-footer">
+                                          <div class="stats">
+                                              <div>Indicates the paths through the code.</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>
+                        </div>
+                      </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+

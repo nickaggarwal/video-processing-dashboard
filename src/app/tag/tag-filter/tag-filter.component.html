@@ -1,0 +1,44 @@
+<div class="col-md-12">
+
+    <div class="row">
+        <div class="col-md-12">
+            <mat-form-field>
+                <input (focus)="showTreeDropDown(true)" matInput type="text" (input)="filterChanged($event.target.value)" placeholder="{{placeHolder}}" autocomplete="off" #inputEl>
+                <mat-icon matSuffix style="font-size: 18px; cursor: pointer;" (click)="removeAllTag($event)">close</mat-icon>
+                <mat-icon matSuffix style="cursor: pointer" (click)="showDropDown = !showDropDown; showDropDown ? $event : $event.stopPropagation()">{{showDropDown ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
+            </mat-form-field>
+        </div>
+      </div>
+
+    <div [ngClass]="showDropDown ? 'dropdown-menu show' : 'dropdown-menu hide'" style="width: inherit; max-height: 260px; overflow-y: auto;">
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node [ngClass]="node.visible ? 'show-tree-node' : 'hide-tree-node'" *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+          <button mat-icon-button disabled></button>
+          <mat-checkbox class="checklist-leaf-node"
+                        [checked]="checklistSelection.isSelected(node)"
+                        (change)="todoItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
+        </mat-tree-node>
+      
+        <mat-tree-node [ngClass]="node.visible ? 'show-tree-node' : 'hide-tree-node'" *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+          <button mat-icon-button matTreeNodeToggle
+                  [attr.aria-label]="'toggle ' + node.filename">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          <mat-checkbox [checked]="descendantsAllSelected(node)"
+                        [indeterminate]="descendantsPartiallySelected(node)"
+                        (change)="todoItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
+        </mat-tree-node>
+      </mat-tree>
+    </div>
+
+      
+      <div class="row bootstrap-tagsinput info-badge" style="margin-top: -10px">
+          <span style="margin-left:20px; margin-top: 5px; display: flex; line-height: 14px" *ngFor="let node of selectedTags" class="tag badge badge-info">{{ node.item }} 
+            <span data-role="remove">
+            </span>
+            <mat-icon class="ml-1" [inline]="true" style="font-size: 14px; cursor: pointer;" (click)="todoItemSelectionToggle(node)">close</mat-icon>
+          </span>
+      </div>
+  </div>

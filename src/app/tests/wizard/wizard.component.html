@@ -1,0 +1,297 @@
+<div class="main-content" style="">
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12 mr-auto ml-auto">
+              <!--      Wizard container        -->
+              <div class="wizard-container">
+                <div class="card card-wizard" data-color="rose" id="wizardProfile" style="margin-top:0px !important; margin-bottom:0px !important">
+                  <form [formGroup]="type" action="" method="">
+                    <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
+                    <div class="card-header text-center">
+                      <h3 class="card-title">
+                        Build Your Own Test
+                      </h3>
+                    </div>
+                    <div class="wizard-navigation">
+                      <ul class="nav nav-pills">
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#test-tab" data-toggle="tab" role="tab">
+                            Test
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#questions-tab" data-toggle="tab" role="tab">
+                            Questions
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#candidates-tab" data-toggle="tab" role="tab">
+                            Candidates
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="card-body">
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="test-tab">
+                          <h5 class="info-text"> Let's start with the test information</h5>
+                          <div class="row justify-content-center">
+
+                            <div class="col-sm-10">
+                              <div class="input-group form-control-lg">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="material-icons">face</i>
+                                  </span>
+                                </div>
+                                <mat-form-field class="example-full-width has-label" [ngClass]="displayFieldCss(type, 'testName')">
+                                  <input type="text"
+                                  name="testName"
+                                  matInput
+                                  id="testName"
+                                  placeholder="Test Name*"
+                                  formControlName="testName">
+                                </mat-form-field>
+                              </div>
+                              <div class="input-group form-control-lg">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="material-icons">record_voice_over</i>
+                                  </span>
+                                </div>
+                                <mat-form-field class="example-full-width has-label" [ngClass]="displayFieldCss(type, 'description')">
+                                  <input type="text"
+                                  name="description"
+                                  matInput
+                                  id="description"
+                                  placeholder="Test Description*"
+                                  formControlName="description">
+                                </mat-form-field>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-10">
+                              <!-- <div class="col-md-4 mr-auto">
+                                <div class="row">
+                                  <div class="col-md-2" style="margin-top: 5%">
+                                    <i class="material-icons">timer</i>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <mat-form-field [ngClass]="displayFieldCss(type, 'testHours')">
+                                          <input type="text"
+                                          name="testHours"
+                                          matInput
+                                          id="testHours"
+                                          placeholder="Hours*"
+                                          formControlName="testHours">
+                                        </mat-form-field>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <mat-form-field [ngClass]="displayFieldCss(type, 'testMinutes')">
+                                          <input type="text"
+                                          name="testMinutes"
+                                          matInput
+                                          id="testMinutes"
+                                          placeholder="Minutes*"
+                                          formControlName="testMinutes">
+                                        </mat-form-field>
+                                  </div>
+                                </div>
+                              </div> -->
+
+                              <div class="col-md-4 mr-auto">
+                                  <div class="row">
+                                    <div class="col-md-1" style="margin-top: 5%">
+                                      <i class="material-icons">timelapse</i>
+                                    </div>
+                                    <div class="col-md-4" style="margin-top: 5%; margin-left: 2.5%">
+                                        <input [min]="getMinExpiryDate()" [owlDateTimeTrigger]="dt" [owlDateTime]="dt" placeholder="Expiry time*" id="testExpiryTime" [(ngModel)]="selectedTime" [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                        <owl-date-time #dt (afterPickerClosed)="afterPickerClosed(dt)"></owl-date-time>
+                                    </div>
+                                  </div>
+                              </div>
+
+                              <div class="col-md-12 mr-auto">
+                                <div class="row">
+                                    <div class="col-md-1" style="margin-top: 3%;margin-left: 0.5%;">
+                                      <i class="material-icons">T</i>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-10 text-left" style="margin-left: -5%;margin-top: 1%">
+                                        <ng-select
+                                                [items]="groupedTechnologies"
+                                                placeholder="Technologies*"
+                                                [multiple]="true"
+                                                bindLabel="tagDto.displayName"
+                                                groupBy="parent"
+                                                [selectableGroup]="true"
+                                                [selectableGroupAsModel]="false"
+                                                [closeOnSelect]="false"
+                                                bindValue="tagDto.id"
+                                                [(ngModel)]="selectedTechnologies"
+                                                formControlName="groupedTechnologiesForm">
+                                                <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}"/> {{item.parent | uppercase}}
+                                                </ng-template>
+                                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}"/> {{item.tagDto.displayName}}
+                                                </ng-template>
+                                          </ng-select>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="tab-pane" id="questions-tab">
+                          <app-question-filter (selectedTagsChange)="selectedTagsChange($event)"></app-question-filter>
+                          <div class="table-responsive search-results-wizard"
+                                infiniteScroll
+                                [infiniteScrollDistance]="1"
+                                [infiniteScrollThrottle]="50"
+                                [scrollWindow]="false"
+                                (scrolled)="onScroll()">
+                                <table class="table">
+                                    <thead>
+                                    <th style="width:2%"> S.No</th>
+                                    <th style="width:25%"> Name</th>
+                                    <th style="width:15%"> Type</th>
+                                    <th style="width:2%"> Difficulty</th>
+                                    <th style="width:2%"> Points </th>
+                                    <th style="width:50%"> Tags</th>
+                                    <th style="width:2%"> Add </th>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let question of questions; let i = index">
+                                          <td> {{ i + 1 }}  </td>
+                                          <td><a href="{{ getQuestionDetailPagePath(question.id) }}" target="_blank" style="color:black;"><b>{{ question.displayTitle }} </b></a></td>
+                                          <td> <span style="margin-left:2px;" class="badge badge-danger">{{ question.type | uppercase }} </span></td>
+                                          <td> {{ question.difficultyLevel }} </td>
+                                          <td>
+                                              {{ question.points }}
+                                          </td>
+                                          <td>
+                                              <span style="margin-left:2px;" *ngFor="let tag of question.tags| slice:0:4" class="badge badge-info">{{ tag.displayName }} </span>
+                                          </td>
+                                          <!-- <td>
+                                              <input type="checkbox" class="test-id" value="{{ question.id }}">
+                                          </td> -->
+                                          <td>
+                                              <button mat-raised-button type="button" class="btn btn-success btn-round p-1" (click)="!question.selected && addQuestion(question)">
+                                                  <i class="material-icons">{{ question.selected ? 'check' : 'add'}}</i>
+                                                </button>
+                                              <!-- <input type="checkbox" class="test-id" value="{{ question.id }}" (change)="onToggleQuestion(question, $event)"> -->
+                                          </td>
+      
+                                      </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <h4 class="col-md-9 font-weight-normal">Selected Questions</h4>
+                                <div class="approx-time mr-auto ml-auto col-md-3" style="display: none; display: flex;  align-items: center; ">
+                                    <h6 class="mr-3">Duration: </h6>
+                                    <mat-form-field class="mr-2" style="width: 64px">
+                                      <mat-label>Day(s)</mat-label>
+                                      <input matInput type="number" min="0" [value]="days" (change)="onDurationChange($event.target.value, hrs, minutes)">
+                                    </mat-form-field>
+                                    <mat-form-field class="mr-2" style="width: 64px">
+                                      <mat-label>Hour(s)</mat-label>
+                                      <input matInput type="number" min="0" max="23" [value]="hrs" (change)="onDurationChange(days, $event.target.value, minutes)">
+                                    </mat-form-field>
+                                    <mat-form-field style="width: 64px">
+                                      <mat-label>Minute(s)</mat-label>
+                                      <input matInput type="number" min="0" max="59" [value]="minutes" (change)="onDurationChange(days, hrs, $event.target.value)">
+                                    </mat-form-field>
+                                  </div>
+                            </div>
+                            <div class="table-responsive" style="height: 13em"
+                                  infiniteScroll
+                                  [infiniteScrollDistance]="1"
+                                  [infiniteScrollThrottle]="50"
+                                  [scrollWindow]="false"
+                                  (scrolled)="onScroll()">
+                                  <table class="table">
+                                      <thead>
+                                      <th style="width:2%"> S.No</th>
+                                      <th style="width:25%"> Name</th>
+                                      <th style="width:15%"> Type</th>
+                                      <th style="width:2%"> Difficulty</th>
+                                      <th style="width:2%"> Points </th>
+                                      <th style="width:50%"> Tags</th>
+                                      <th style="width:2%"> Remove </th>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let question of selectedQuestion; let i = index">
+                                            <td> {{ i + 1 }}  </td>
+                                            <td><a href="getQuestionDetailPagePath(question.id)" style="color:black;"><b>{{ question.displayTitle }} </b></a></td>
+                                            <td> <span style="margin-left:2px;" class="badge badge-danger">{{ question.type | uppercase }} </span></td>
+                                            <td> {{ question.difficultyLevel }} </td>
+                                            <td>
+                                                {{ question.points }}
+                                            </td>
+                                            <td>
+                                                <span style="margin-left:2px;" *ngFor="let tag of question.tags| slice:0:4" class="badge badge-info">{{ tag.displayName }} </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <button mat-raised-button type="button" class="btn btn-danger btn-round p-1" (click)="removeQuestion(question, i)">
+                                                    <i class="material-icons">remove</i>
+                                                  </button>
+                                            </td>
+                                        </tr>
+                                      </tbody>
+                                  </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="candidates-tab">
+                          <div class="row justify-content-center">
+                            <div class="col-sm-12 text-right">
+                                <a href="javascript:void(0)">
+                                    <input type="button" (click)="tableData['addNewRow'] = true" class="btn btn-rose" name="download" value="Add">
+                                </a>
+                                <a href="javascript:void(0)">
+                                    <input type="button" (click)="downloadCandidateTemplate()" class="btn btn-rose" name="download" value="Download template">
+                                  </a>
+
+                                <!-- <a href="javascript:void(0)">
+                                    <input type="button" (click)="downloadCandidateTemplate()" class="btn btn-rose" name="download" value="Download template">
+                                  </a> -->
+                            </div>                          
+                          </div>
+                          <!-- <app-data-table [dataTableTitle]="dataTableTitle" [tableData]="tableData" (rowAdded)="addRow()" (rowEdited)="editRow($event)" (rowDeleted)="deleteRow($event)"></app-data-table> -->
+                          <app-data-table [dataTableTitle]="dataTableTitle" [(addNewRow)]="tableData['addNewRow']" [tableData]="tableData" (rowDeleted)="deleteRow($event)" (duplicateError)="duplicateError()"></app-data-table>
+                          <div class="row justify-content-center">
+                              <div class="col-sm-12 text-right">
+                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                    <div>
+                                        <span class="btn btn-rose btn-file">
+                                            Upload candidate data
+                                            <input id="candidate-file" type="file" name="..." (change)="render($event.target.files)" />
+                                        </span>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <div class="mr-auto">
+                        <input type="button" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">
+                      </div>
+                      <div class="ml-auto">
+                        <input type="button" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">
+                        <input type="button" [routerLink]="" (click)="submitFormTestInfo()" class="btn btn-finish btn-fill btn-rose btn-wd" name="finish" value="Finish" style="display: none;">
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- wizard container -->
+            </div>
+        </div>
+    </div>
+</div>

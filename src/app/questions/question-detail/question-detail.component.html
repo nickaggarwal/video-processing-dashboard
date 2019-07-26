@@ -1,0 +1,28 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card" *ngIf="question">
+                  <app-question-overview-card [question]="question"></app-question-overview-card>
+              </div>
+              <br>
+              <div class="card" *ngIf="question">
+                <div class="card-header card-header-warning card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">view_day</i>
+                  </div>
+                  <div class="card-title row"> 
+                      <h4 class="col-md-6 text-left">Details </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12" [innerHTML]="question.text">
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>

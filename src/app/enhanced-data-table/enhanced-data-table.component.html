@@ -1,0 +1,50 @@
+<div class="row search-results"
+    infiniteScroll
+    [infiniteScrollDistance]="1"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <!-- <i class="material-icons">{{headerCardIcon}}</i> -->
+                    <i *ngIf="!isSample" [ngClass]="headerCardIcon"></i>
+                    <i *ngIf="isSample" [ngClass]="sampleHeaderCardIcon"></i>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <h4 class="card-title">{{dataTableTitle}}</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <h4 class="card-title" style="font-weight: bolder">{{totalRecords}}</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" *ngIf="tableData">
+                            <thead class="text-primary">
+                                <tr>
+                                    <th class="text-center">#</th>  
+                                    <th class="text-center" *ngFor="let headerRowName of tableData.headerRowNames">{{ headerRowName }}</th>
+                                    <th class="text-center">Actions</th>  
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of tableData.dataRows; let rowIdx = index;">
+                                    <td class="text-center">{{rowIdx + 1}}</td>
+                                    <td class="text-center" *ngFor="let headerRow of tableData.headerRow; let i = index;">{{row[headerRow]}}</td>
+                                    <td class="td-actions text-center">
+                                        <button mat-raised-button type="button" class="btn btn-success btn-round" style="margin: 0px 4px;" (click)="view(row)">
+                                            <i class="material-icons">assignment</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,163 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" *ngFor="let candidate of candidate_tests">
+                <div class="card">
+                    <div class="card-header card-header-icon card-header-info">
+                        <div class="card-icon"><i class="fa fa-users"></i></div>
+                        <h4 class="card-title">
+                            {{ candidate.candidate_name }}
+                            <small> - {{ candidate.candidate_email }}</small>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{{ candidate.test_data.name }}</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <p>{{ candidate.test_data.description }}</p>
+                            </div>
+                            <div class="col-md-5">
+                                Allowed Technologies - <span style="margin-left:20px;"
+                                                             *ngFor="let tags of candidate.test_data.technology.split(',')"
+                                                             class="badge badge-info">{{ tags }} </span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" *ngIf="candidate.result_data">
+                            <div class="col-md-12">
+                                <h3> Questions </h3>
+                            </div>
+                            <div class="col-md-12" *ngFor="let assignment of candidate.result_data.data; let i = index">
+                                <div class="col-md-12">
+                                    <h4>{{ i+1 }}) {{ assignment.assignment_milestone__display_name }} </h4>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead class="text-primary">
+                                            <th> Test Case</th>
+                                            <th> Description</th>
+                                            <th> Status</th>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let milestone of assignment.assignment_milestone__milestone_tests">
+                                                <td>{{milestone.name}}</td>
+                                                <td><span
+                                                        *ngFor="let subtest of milestone.subtest"> {{ subtest }} </span>
+                                                </td>
+                                                <td><span style="margin-left:20px;"
+                                                          class="badge badge-success">Passed</span></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-warning card-header-icon">
+                                        <div class="card-icon"><i class="material-icons">grid_on</i></div>
+                                        <p class="card-category">Code Smells</p>
+                                        <h3 class="card-title">{{ assignment.report.component.measures.code_smells }}</h3></div>
+                                    <div class="card-footer">
+                                        <div class="stats">
+                                            <i class="material-icons text-danger">help_outline</i><a href="#pablo">Code Smells indicate poor design concepts</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-rose card-header-icon">
+                                        <div class="card-icon"><i class="material-icons">equalizer</i></div>
+                                        <p class="card-category">Blocker Violations</p>
+                                        <h3 class="card-title">{{ assignment.report.component.measures.blocker_violations }}</h3></div>
+                                    <div class="card-footer">
+                                        <div class="stats"><i class="material-icons">highlight_off</i> There violations can lead to runtime application issues
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-success card-header-icon">
+                                        <div class="card-icon"><i class="material-icons"></i></div>
+                                        <p class="card-category">Critical Violations</p>
+                                        <h3 class="card-title">{{ assignment.report.component.measures.critical_violations }}</h3></div>
+                                    <div class="card-footer">
+                                        <div class="stats"><i class="material-icons">warning</i> These are critical issues that may lead edge cases in code.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-info card-header-icon">
+                                        <div class="card-icon"><i class="fa fa-users"></i></div>
+                                        <p class="card-category">Bugs</p>
+                                        <h3 class="card-title">{{ assignment.report.component.measures.bugs }}</h3></div>
+                                    <div class="card-footer">
+                                        <div class="stats"><i class="material-icons">bug_report</i> These are issues that indicate low language proficiency</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-warning card-header-icon">
+                                        <div class="card-icon"><i class="material-icons">grid_on</i></div>
+                                        <p class="card-category">Reliability Rating</p>
+                                        <h3 class="card-title">{{ assignment.report.component.measures.reliability_rating }}</h3></div>
+                                    <div class="card-footer">
+                                        <div class="stats">
+                                            <i class="material-icons text-danger">star_rate</i><a href="#pablo">Using overall Me</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-rose card-header-icon">
+                                        <div class="card-icon"><i class="material-icons">equalizer</i></div>
+                                        <p class="card-category">Classes & Statements</p>
+                                        <h3 class="card-title">{{ assignment.report.component.measures.classes }} & {{assignment.report.component.measures.statements}}</h3></div>
+                                    <div class="card-footer">
+                                        <div class="stats"><i class="material-icons">remove_red_eye</i> There violations can lead to runtime application issues
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-success card-header-icon">
+                                        <div class="card-icon"><i class="material-icons"></i></div>
+                                        <p class="card-category">Duplicate Lines</p>
+                                        <h3 class="card-title">{{ assignment.report.component.measures.duplicated_lines }}</h3></div>
+                                    <div class="card-footer">
+                                        <div class="stats"><i class="material-icons">view_headline</i> Code Duplication</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-info card-header-icon">
+                                        <div class="card-icon"><i class="fa fa-users"></i></div>
+                                        <p class="card-category">Bugs</p>
+                                        <h3 class="card-title">{{ assignment.report.component.measures.complexity }}</h3></div>
+                                    <div class="card-footer">
+                                        <div class="stats"><i class="material-icons">format_line_spacing</i> Amount of Nesting</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

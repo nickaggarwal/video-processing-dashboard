@@ -1,0 +1,21 @@
+<div class="main-content">
+
+    <app-question-filter (selectedTagsChange)="selectedTagsChange($event)" [selectedTagIds]="tagIds"></app-question-filter>
+
+    <br>
+    
+    <div class="container-fluid">
+        <h4 class="text-right" style="font-weight: bolder">Total Questions: {{totalRecords}}</h4>
+        <div class="row search-results"
+        infiniteScroll
+        [infiniteScrollDistance]="1"
+        [infiniteScrollThrottle]="50"
+        (scrolled)="onScroll()">
+          <div class="col-md-12" *ngFor="let question of questions; let i = index;">
+              <div class="card card-hover-click" (click)="viewQuestion(question)" style="cursor: pointer">
+                <app-question-overview-card [question]="question" [index]="i"></app-question-overview-card>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>

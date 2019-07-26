@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="row">
+      <div class="col-md-10 ml-auto mr-auto">
+      <div class="card card-signup">
+        <h2 class="card-title text-center">Register</h2>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-5 ml-auto">
+              <div class="info info-horizontal">
+                <div class="icon icon-rose">
+                  <i class="material-icons">timeline</i>
+                </div>
+                <div class="description">
+                  <h4 class="info-title">Test Real World Problem Solving</h4>
+                  <p class="description">
+                    We've created worlds first platform to test real for programming challenges like making a ride sharing app, e-commerce engine and several other challenges.
+                  </p>
+                </div>
+              </div>
+              <div class="info info-horizontal">
+                <div class="icon icon-primary">
+                  <i class="material-icons">code</i>
+                </div>
+                <div class="description">
+                  <h4 class="info-title">Detailed Report</h4>
+                  <p class="description">
+                    Once the candidate has completed his test recruiter will be able to see detailed reports for complexity, code quality, test scenarios for the real world coding problem.
+                  </p>
+                </div>
+              </div>
+              <div class="info info-horizontal">
+                <div class="icon icon-info">
+                  <i class="material-icons">group</i>
+                </div>
+                <div class="description">
+                  <h4 class="info-title">Built for Scale</h4>
+                  <p class="description">
+                    The platform is fully automated and you just need to 5 mins to create a test and send it to the candidate.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 mr-auto">
+              <form class="form" method="" action="">
+                <div class="form-group has-default">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">face</i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control" name="login-first_name" [(ngModel)]="user.firstName" placeholder="First Name...">
+                  </div>
+                </div>
+                <div class="form-group has-default">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">face</i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control" name="login-first_name" [(ngModel)]="user.lastName" placeholder="Last Name..." >
+                  </div>
+                </div>
+                <div class="form-group has-default">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">mail</i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control" name="login-email" [(ngModel)]="user.email" placeholder="Email..." >
+                  </div>
+                </div>
+                <div class="form-group has-default">
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="material-icons">work</i>
+                        </span>
+                      </div>
+                      <div class="form-control">
+                        <app-enterprise-type-single-select [entType]="user.entType" (selectionChange)="selectedChange($event)"  ></app-enterprise-type-single-select>
+                      </div>
+                  </div>
+                </div>
+                <div class="form-group has-default">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">business</i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control" name="login-enterprise" [(ngModel)]="user.entName" placeholder="Enterprise Name..." >
+                  </div>
+                </div>
+                <div class="form-group has-default">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">lock_outline</i>
+                      </span>
+                    </div>
+                    <input type="password" name="login-password" [(ngModel)]="user.password" placeholder="Password ..." placeholder="Password..." class="form-control">
+                  </div>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value="" checked="">
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                    I agree to the
+                    <a href="#something">terms and conditions</a>.
+                  </label>
+                </div>
+                <div class="text-center">
+                  <a [routerLink]="" (click)="register()" class="btn btn-primary btn-round mt-4">Get Started</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

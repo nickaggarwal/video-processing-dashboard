@@ -1,0 +1,15 @@
+.search-results {
+    height: 100%;
+}
+
+.search-results-wizard {
+    height: 32em;
+}
+
+.hide-tree-node {
+    display: none !important;
+}
+
+.show-tree-node {
+    display: none // this won't be given importance!
+}

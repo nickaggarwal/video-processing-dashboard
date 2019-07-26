@@ -1,0 +1,32 @@
+<ng-container *ngIf="question">
+  <div class="card-header card-header-success card-header-icon">
+    <div class="card-icon">
+      <i class="material-icons">question_answer</i>
+    </div>
+    <div class="card-title row"> 
+      <h4 class="col-md-10 text-left">
+          <span style="margin-left:-15px" *ngIf="index !== undefined">{{index + 1}}) </span><span style="padding-right: 20px;padding-top: 5px"> {{question.displayTitle}}</span> 
+        <span class="badge badge-secondary rounded"> {{question.type | uppercase}}  </span>
+        <span style="margin-left: 10px;" *ngIf="question.difficultyLevel" [ngClass]="question.difficultyLevel === 'Easy' ? 'badge badge-pill badge-success rounded' : (question.difficultyLevel === 'Medium' ? 'badge badge-pill badge-warning rounded' : 'badge badge-pill badge-danger rounded')" >{{ question.difficultyLevel }} </span>
+      </h4>
+      <h5 class="col-md-2 text-center">
+        <span class="badge badge-primary rounded badge-large"> Points: {{question.points}}</span> 
+      </h5>
+    </div>
+  </div>
+  <div class="card-body">
+      <div class="row">
+          <div class="col-md-12">
+            <span>{{question.displayDescription}}</span>
+          </div>
+        </div>
+      <br>
+      <div class="row">
+          <div class="col-md-10 text-left">
+              <span *ngFor="let tag of question.tags; let i = index;" [ngStyle]="i !== 0 && {'margin-left': '20px'}" class="badge badge-info">
+                <span  > {{ tag.displayName }}  </span>
+              </span>
+          </div>
+      </div>
+  </div>
+</ng-container>

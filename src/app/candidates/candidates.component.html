@@ -1,0 +1,47 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <!-- <i class="material-icons">assignment</i> -->
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                        <h4 class="card-title"> Candidates </h4>
+                        <h4 class="card-title text-right" style="font-weight: bolder">Total Candidates: {{totalRecords}}</h4>
+                    </div>
+                    <div class="row search-results"
+                    infiniteScroll
+                    [infiniteScrollDistance]="1"
+                    [infiniteScrollThrottle]="50"
+                    (scrolled)="onScroll()">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <th> S.No</th>
+                                    <th> Candidate Id</th>
+                                    <th> Candidate Name</th>
+                                    <th> Candidate Email</th>
+                                    <th> Status</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let candidate of candidates; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{candidate.id}}</td>
+                                        <td>{{candidate.name}}</td>
+                                        <td>{{candidate.email}}</td>
+                                        <td><span style="margin-left:20px;" class="badge badge-info"> Registered </span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

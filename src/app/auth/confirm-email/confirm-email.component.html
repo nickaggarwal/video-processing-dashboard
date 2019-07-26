@@ -1,0 +1,25 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 ml-auto mr-auto">
+      <div class="card text-center">
+          <br><br>
+          <div class="large-icon">
+              <mat-icon [inline]="true">mail_outline</mat-icon>
+          </div>
+          <br><br>
+          <h3 class="card-title text-center">Confirm your email address!</h3>
+        <div class="card-body ">
+            A confirmation email has been sent to your email address: <span class="mat-h4">{{email}}</span>
+            <br><br>
+            <div>Check your inbox and click on the Confirmation link to confirm your email address.</div>
+            <a [routerLink]="['/auth/login']" style="text-decoration: underline;">Go back to Login Page</a>
+            <br><br>
+            <div>Didn't get link?</div>
+            <a [routerLink]="" (click)="resendVerificationEmail()" style="text-decoration: underline;">Click here to resend</a>
+            <br><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

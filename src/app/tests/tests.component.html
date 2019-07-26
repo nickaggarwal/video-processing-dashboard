@@ -1,0 +1,5 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <app-enhanced-data-table [isSample]="isSampleFlag" [headerCardIcon]="'fas fa-chart-bar fa-2x'" [sampleHeaderCardIcon]="'fas fa-chart-line fa-2x'" [dataTableTitle]="'Tests'" [tableData]="tableData" [totalRecords]="totalRecordsStr" (onScrollEvent)="onScroll()" (viewEvent)="viewReport($event)"></app-enhanced-data-table>
+    </div>
+</div>
