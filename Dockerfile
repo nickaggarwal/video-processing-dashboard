@@ -16,4 +16,4 @@ COPY . /app
 RUN npm install typescript@'>=2.7.2 <2.8.0'
 
 # start app
-CMD ng serve --host 0.0.0.0
+CMD ng serve --host 0.0.0.0 --disable-host-check
